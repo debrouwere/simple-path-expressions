@@ -1,0 +1,27 @@
+{
+  "name": "simple-path-expressions",
+  "version": "0.2.0",
+  "description": "A dumbed-down but easier-to-use kind of regular expressions for matching and filling paths and urls.",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "underscore": "1.6.x"
+  }, 
+  "devDependencies": {
+    "should": "", 
+    "mocha": ""
+  }, 
+  "scripts": {
+    "test": "make test"
+  },
+  "keywords": [
+    "regex",
+    "regexp",
+    "routing",
+    "router"
+  ],
+  "author": "Stijn Debrouwere",
+  "license": "MIT"
+}
