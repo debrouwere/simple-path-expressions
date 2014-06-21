@@ -8,7 +8,7 @@ urls = [
 ]
 
 
-console.log simplex.match '/archive/2014/05/jones/index.html', urls[2]
+console.log simplex.match urls[2], '/archive/2014/05/jones/index.html'
 
 
 console.log simplex.fill urls[1], 

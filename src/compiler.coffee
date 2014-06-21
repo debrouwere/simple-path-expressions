@@ -1,9 +1,11 @@
 _ = require 'underscore'
 filters = require './filters'
 placeholders = require './placeholders'
-{match, name} = require './utils'
+utils = require './utils'
 
 
+# annotate a regexp match from `utils.multimatch`
+# with some useful metadata
 annotate = (match) ->
     lastChar = match.match[match.match.length - 1]
     match.trailing = if lastChar is '/' then yes else no
@@ -11,37 +13,87 @@ annotate = (match) ->
     match.type = filters[match.type] or filters['*']
     match
 
-
-grouper = _.partial name, _, ['name', 'optional', 'type']
-
-
-exports.analyze = analyze = (str, patterns...) ->
-    matches = match str, patterns...
-    matches
-        .map grouper
-        .map annotate
+# give names to captured groups
+name = _.partial utils.name, _, ['name', 'optional', 'type']
 
 
-exports.compile = (path, styles...) ->
-    patterns = placeholders.get styles...
-    segments = analyze path, patterns...
+class exports.InterpolationError extends Error
+    name: 'InterpolationError'
+    constructor: (@message) ->
+        Error.captureStackTrace this, this.constructor
 
-    # optional segments that span multiple placeholders
-    path = path.replace /\((.+)\)/, '(?:$1)?', 'g'
 
-    for segment in segments
-        type = segment.type
+class exports.PathExp
+    constructor: (@raw, @styles...) ->
+        if not styles.length then styles = ['unix', 'ruby', 'python']
+        @patterns = placeholders.get styles...
+        @segments = @_analyze()
+        @regexp = @_compile()
 
-        if segment.trailing
-            replacement = "(?:(#{type})/?)"
+    _analyze: ->
+        matches = utils.multimatch @raw, @patterns...
+        matches
+            .map name
+            .map annotate
+
+    _compile: ->
+        # optional segments that span multiple placeholders
+        path = @raw.replace /\((.+)\)/, '(?:$1)?', 'g'
+
+        for segment in @segments
+            type = segment.type
+
+            if segment.trailing
+                replacement = "(?:(#{type})/?)"
+            else
+                replacement = "(#{type})"
+
+            if segment.optional
+                replacement += '?'
+
+            path = path.replace segment.match, replacement
+
+        expression = new RegExp "^#{path}$"
+        expression.segments = @segments
+        expression
+
+    match: (str) ->
+        names = _.pluck @segments, 'name'
+        matches = @regexp.exec str
+
+        if matches is null
+            null
         else
-            replacement = "(#{type})"
+            _.object _.zip names, matches[1..]
 
-        if segment.optional
-            replacement += '?'
+    replace: (str, flags) ->
+        @regexp.replace str, flags
 
-        path = path.replace segment.match, replacement
+    fill: (map) ->
+        path = @raw
 
-    expression = new RegExp "^#{path}$"
-    expression.segments = segments
-    expression
+        for segment in @segments
+            replacement = map[segment.name]
+
+            if not replacement and segment.optional
+                replacement = ''
+
+            if replacement
+                if segment.trailing
+                    replacement += '/'
+            else
+                if segment.optional
+                    replacement = ''
+                else
+                    throw new exports.InterpolationError "no value provided for `#{segment.name}`"
+
+            path = path.replace segment.match, replacement
+
+        # get rid of any remaining regexp cruft
+        path.replace /\((.+)\)/, '$1', 'g'
+
+    toString: (raw = no) ->
+        if raw
+            @raw
+        else
+            @regexp

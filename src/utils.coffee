@@ -2,7 +2,7 @@ _ = require 'underscore'
 
 # match against multiple patterns, 
 # not allowing for any overlap
-exports.match = (str, patterns...) ->
+exports.multimatch = (str, patterns...) ->
     matches = []
 
     i = -1
