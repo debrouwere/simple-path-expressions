@@ -27,7 +27,8 @@ class exports.PathExp
     constructor: (@raw, @styles...) ->
         if not styles.length then styles = ['unix', 'ruby', 'python']
         @patterns = placeholders.get styles...
-        @segments = @_analyze()
+        @placeholders = @_analyze()
+        @hasPlaceholders = new Boolean @placeholders.length
         @regexp = @_compile()
 
     _analyze: ->
@@ -39,26 +40,29 @@ class exports.PathExp
     _compile: ->
         # optional segments that span multiple placeholders
         path = @raw.replace /\((.+)\)/, '(?:$1)?', 'g'
+        # characters that need to be escaped
+        # TODO: to a better job of this
+        path = path.replace '.', '\\.'
 
-        for segment in @segments
-            type = segment.type
+        for placeholder in @placeholders
+            type = placeholder.type
 
-            if segment.trailing
+            if placeholder.trailing
                 replacement = "(?:(#{type})/?)"
             else
                 replacement = "(#{type})"
 
-            if segment.optional
+            if placeholder.optional
                 replacement += '?'
 
-            path = path.replace segment.match, replacement
+            path = path.replace placeholder.match, replacement
 
         expression = new RegExp "^#{path}$"
-        expression.segments = @segments
+        expression.placeholders = @placeholders
         expression
 
     match: (str) ->
-        names = _.pluck @segments, 'name'
+        names = _.pluck @placeholders, 'name'
         matches = @regexp.exec str
 
         if matches is null
@@ -72,28 +76,28 @@ class exports.PathExp
     fill: (map) ->
         path = @raw
 
-        for segment in @segments
-            replacement = map[segment.name]
+        for placeholder in @placeholders
+            replacement = map[placeholder.name]
 
-            if not replacement and segment.optional
+            if not replacement and placeholder.optional
                 replacement = ''
 
             if replacement
-                if segment.trailing
+                if placeholder.trailing
                     replacement += '/'
             else
-                if segment.optional
+                if placeholder.optional
                     replacement = ''
                 else
-                    throw new exports.InterpolationError "no value provided for `#{segment.name}`"
+                    throw new exports.InterpolationError "no value provided for `#{placeholder.name}`"
 
-            path = path.replace segment.match, replacement
+            path = path.replace placeholder.match, replacement
 
         # get rid of any remaining regexp cruft
         path.replace /\((.+)\)/, '$1', 'g'
 
-    toString: (raw = no) ->
-        if raw
-            @raw
-        else
-            @regexp
+    toRegExp: ->
+        @regexp
+
+    toString: ->
+        @raw

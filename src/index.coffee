@@ -10,8 +10,7 @@ exports.PathExp = PathExp
 
 exports.compile = (pattern, styles...) ->
     px = new PathExp pattern, styles...
-    px.toString()
-
+    px.toRegExp()
 
 exports.match = (pattern, str, styles...) ->
     px = new PathExp pattern, styles...

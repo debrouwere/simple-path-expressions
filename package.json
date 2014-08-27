@@ -1,17 +1,22 @@
 {
   "name": "simple-path-expressions",
-  "version": "0.2.0",
+  "version": "1.0.0-rc1",
   "description": "A dumbed-down but easier-to-use kind of regular expressions for matching and filling paths and urls.",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
   },
+  "repository": {
+    "type": "git", 
+    "url": "git://github.com/stdbrouw/simple-path-expressions"
+  }, 
   "dependencies": {
     "underscore": "1.6.x"
   }, 
   "devDependencies": {
-    "should": "", 
-    "mocha": ""
+    "coffee-script": "1.8.x", 
+    "should": "4.x", 
+    "mocha": "1.x"
   }, 
   "scripts": {
     "test": "make test"
@@ -23,5 +28,5 @@
     "router"
   ],
   "author": "Stijn Debrouwere",
-  "license": "MIT"
+  "license": "ISC"
 }
