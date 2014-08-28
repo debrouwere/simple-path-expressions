@@ -25,6 +25,10 @@ class exports.InterpolationError extends Error
 
 class exports.PathExp
     constructor: (@raw, @styles...) ->
+        type = typeof @raw
+        unless type is 'string'
+            throw new Error "Path expression should be a string. Instead got #{@raw} (#{type})"
+
         if not styles.length then styles = ['unix', 'ruby', 'python']
         @patterns = placeholders.get styles...
         @placeholders = @_analyze()
