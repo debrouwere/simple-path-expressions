@@ -27,7 +27,8 @@ class exports.PathExp
     constructor: (@raw, @styles...) ->
         type = typeof @raw
         unless type is 'string'
-            throw new Error "Path expression should be a string. Instead got #{@raw} (#{type})"
+            throw new Error \
+                "Path expression should be a string. Instead got #{@raw} (#{type})"
 
         if not styles.length then styles = ['unix', 'ruby', 'python']
         @patterns = placeholders.get styles...
@@ -93,7 +94,8 @@ class exports.PathExp
                 if placeholder.optional
                     replacement = ''
                 else
-                    throw new exports.InterpolationError "no value provided for `#{placeholder.name}`"
+                    throw new exports.InterpolationError \
+                        "no value provided for `#{placeholder.name}`"
 
             path = path.replace placeholder.match, replacement
 
