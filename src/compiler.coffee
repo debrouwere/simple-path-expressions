@@ -32,7 +32,7 @@ class exports.PathExp
         if not styles.length then styles = ['unix', 'ruby', 'python']
         @patterns = placeholders.get styles...
         @placeholders = @_analyze()
-        @hasPlaceholders = new Boolean @placeholders.length
+        @hasPlaceholders = @placeholders.length isnt 0
         @regexp = @_compile()
 
     _analyze: ->
