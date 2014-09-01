@@ -68,3 +68,17 @@ describe 'simple path expressions', ->
         getUrl = -> simplex.fill pattern, 
             year: 2014
         getUrl.should.throw simplex.InterpolationError
+
+    it 'can split up a path expression into a (non-interpolated) head and an (interpolated) tail', ->
+        p = new simplex.PathExp 'content/<year>/video/<permalink>/'
+        p.head.should.eql 'content'
+        p.tail.should.eql '<year>/video/<permalink>/'
+
+        p = new simplex.PathExp '/articles'
+        p.head.should.eql '/articles'
+        p.tail.should.eql ''
+
+        p = new simplex.PathExp '<type>/archive'
+        p.head.should.eql = ''
+        p.tail.should.eql '<type>/archive'
+        

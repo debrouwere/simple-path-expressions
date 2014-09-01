@@ -34,7 +34,22 @@ class exports.PathExp
         @patterns = placeholders.get styles...
         @placeholders = @_analyze()
         @hasPlaceholders = @placeholders.length isnt 0
+        [@head, @tail] = @_findHead()
         @regexp = @_compile()
+
+    _findHead: ->
+        if not @hasPlaceholders
+            return [@raw, '']
+
+        head = []
+        tail = []
+        for segment in @raw.split '/'
+            if tail.length or (utils.multimatch segment, @patterns...).length
+                tail.push segment
+            else
+                head.push segment
+
+        [(head.join '/'), (tail.join '/')]
 
     _analyze: ->
         matches = utils.multimatch @raw, @patterns...
