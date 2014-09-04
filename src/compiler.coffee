@@ -61,8 +61,8 @@ class exports.PathExp
         # optional segments that span multiple placeholders
         path = @raw.replace /\((.+)\)/, '(?:$1)?', 'g'
         # characters that need to be escaped
-        # TODO: to a better job of this
-        path = path.replace '.', '\\.'
+        # TODO: do a better job of this
+        path = path.replace /\./g, '\\.'
 
         for placeholder in @placeholders
             type = placeholder.type
