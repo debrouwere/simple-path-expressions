@@ -1,6 +1,6 @@
 {
   "name": "simple-path-expressions",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-rc2",
   "description": "A dumbed-down but easier-to-use kind of regular expressions for matching and filling paths and urls.",
   "main": "lib/index.js",
   "directories": {
