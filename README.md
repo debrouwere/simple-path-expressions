@@ -78,17 +78,17 @@ Generally, a placeholder will match anything that isn't a slash. However, it is 
 
 The available formats are: 
 
-Format | RegExp               | Description
------- | -------------------- | -----------
-**Y**  | `\d{4}`              | year, including century
-**y**  | `\d{2}`              | year, not including century
-**M**  | `jan\|feb\|mar\|...` | month, abbreviated
-**m**  | [see code][formats]  | month, 1 or 2 digits
-**d**  | [see code][formats]  | day, 1 or 2 digits
-**#**  | `\d+`                | number, any length
-**s**  | `[\w-]+`             | slug
-**u**  | [see code][formats]  | uuid
-**\*** | `[^/]+`              | the default, which matches anything
+Format | RegExp              | Description
+------ | ------------------- | -----------
+**Y**  | `\d{4}`             | year, including century
+**y**  | `\d{2}`             | year, not including century
+**M**  | [see code][formats] | month, abbreviated
+**m**  | [see code][formats] | month, 1 or 2 digits
+**d**  | [see code][formats] | day, 1 or 2 digits
+**#**  | `\d+`               | number, any length
+**s**  | `[\w-]+`            | slug
+**u**  | [see code][formats] | uuid
+**\*** | `[^/]+`             | the default, which matches anything
 
 [formats]: https://github.com/stdbrouw/simple-path-expressions/blob/master/src/formats.coffee
 
