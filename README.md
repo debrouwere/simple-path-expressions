@@ -78,7 +78,7 @@ Generally, a placeholder will match anything that isn't a slash. However, it is 
 
 The available formats are: 
 
-Format | RegExp equivalent   | Description
+Format | RegExp              | Description
 ------ | ------------------- | -----------
 **Y**  | `\d{4}`             | year, including century
 **y**  | `\d{2}`             | year, not including century
