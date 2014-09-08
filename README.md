@@ -7,7 +7,7 @@ Simple Path Expressions are a dumbed-down but easier-to-use kind of regular expr
 * **Shortcuts to common patterns:** specify that a certain URL or path segments needs to be a year or a month or a UUID or a number or a string.
 * **Object-oriented or functional:** two interfaces to the same functionality. Your pick.
 
-## How to use
+## Usage
 
 Translate a simple path expression into a regular expression: 
 
