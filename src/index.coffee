@@ -1,5 +1,5 @@
 _ = require 'underscore'
-exports.filters = require './filters'
+exports.formats = require './formats'
 exports.placeholders = require './placeholders'
 {InterpolationError, PathExp} = require './compiler'
 

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-filters = require './filters'
+formats = require './formats'
 placeholders = require './placeholders'
 utils = require './utils'
 
@@ -10,7 +10,7 @@ annotate = (match) ->
     lastChar = match.match[match.match.length - 1]
     match.trailing = if lastChar is '/' then yes else no
     match.optional = _.contains placeholders.optional, match.pattern
-    match.type = filters[match.type] or filters['*']
+    match.type = formats[match.type] or formats['*']
     match
 
 # give names to captured groups
