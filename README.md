@@ -120,7 +120,27 @@ Take a look at the [test suite](https://github.com/stdbrouw/simple-path-expressi
 
 Simple path expressions are inspired by [Cody Soyland](http://codysoyland.com/)'s [Surlex](https://github.com/codysoyland/surlex) library for Python. Surlex is "a language for URL matching and extraction."
 
-## Roadmap
+## Missing features
+
+This is a list of features I'd like to implement at some point in the future, though there's no clear roadmap detailing if and when they might land.
+
+### Traversal
+
+We don't always have full control over the structure of the objects we use to fill in a path expression. When dealing with nested objects, traversal using dot notation could be quite useful: 
+
+```javascript
+var template = new PathExp('/posts/<post.author>/<post.metadata.title>');
+assert template.fill({
+    post: {
+        author: 'me', 
+        metadata: {
+            title: 'first-post'
+        }
+    }
+}) == '/posts/me/first-post';
+```
+
+### Filters
 
 One interesting feature we might implement at some point would be filters.
 
