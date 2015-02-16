@@ -50,6 +50,37 @@ describe 'simple path expressions', ->
             day: undefined
             author: 'jones'
 
+    it 'does not match more than it should', ->
+        match = simplex.match \
+            '<client>-<id>-<description>', 
+            'acme-005-rocket-launcher'
+        match.should.eql
+            client: 'acme'
+            id: '005'
+            description: 'rocket-launcher'
+
+        match = simplex.match \
+            '<client:w>-<id>-<description>', 
+            'acme-inc-005-rocket-launcher'
+        match.should.eql
+            client: 'acme'
+            id: 'inc'
+            description: '005-rocket-launcher'
+
+        match = simplex.match \
+            '<client:s>-<id:#>-<description>', 
+            'acme-inc-5-rocket-launcher'
+        match.should.eql
+            client: 'acme-inc'
+            id: '5'
+            description: 'rocket-launcher'
+
+        match = simplex.match \
+            '<description>', 
+            'acme-inc-005-rocket-launcher'
+        match.should.eql
+            description: 'acme-inc-005-rocket-launcher'
+
     it 'can fill in the placeholders in a path expression', ->
         pattern = '/[year]/articles/<article>'
         url = simplex.fill pattern, 
