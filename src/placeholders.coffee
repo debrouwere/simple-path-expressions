@@ -2,14 +2,14 @@ _ = require 'underscore'
 
 
 exports.required = required = 
-    unix: /^<(\w+)(\?)?(?::(\w))?>/
-    ruby: /^:(\w+)(\?)?(?::(\w))?/
-    python: /^\{(\w+)(\?)?(?::(\w))?\}/
+    unix: /^<(\w+)(\?)?(?::([\w#]))?>/
+    ruby: /^:(\w+)(\?)?(?::([\w#]))?/
+    python: /^\{(\w+)(\?)?(?::([\w#]))?\}/
 
 
 exports.optional = optional = 
-    unix: /^\[(\w+)(:(\w))?\]\/?/
-    ruby: /^\(:(\w+)(:(\w))\)?\/?/
+    unix: /^\[(\w+)(:([\w#]))?\]\/?/
+    ruby: /^\(:(\w+)(:([\w#]))\)?\/?/
 
 
 exports.get = (styles...) ->
