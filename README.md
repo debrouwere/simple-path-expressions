@@ -90,9 +90,10 @@ Format | RegExp              | Description
 **m**  | [see code][formats] | month, 1 or 2 digits
 **d**  | [see code][formats] | day, 1 or 2 digits
 **#**  | `\d+`               | number, any length
+**w**  | `\w+`               | word
 **s**  | `[\w-]+`            | slug
 **u**  | [see code][formats] | uuid
-**\*** | `[^/]+`             | the default, which matches anything
+**\*** | `[^/]+?`            | the default, which matches anything
 
 [formats]: https://github.com/stdbrouw/simple-path-expressions/blob/master/src/formats.coffee
 
