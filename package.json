@@ -1,6 +1,6 @@
 {
   "name": "simple-path-expressions",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A dumbed-down but easier-to-use kind of regular expressions for matching and filling paths and urls.",
   "main": "lib/index.js",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git", 
-    "url": "git://github.com/stdbrouw/simple-path-expressions"
+    "url": "git://github.com/debrouwere/simple-path-expressions"
   }, 
   "dependencies": {
     "underscore": "1.6.x"
