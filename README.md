@@ -1,6 +1,6 @@
 # Simple Path Expressions
 
-[![Build Status](https://travis-ci.org/stdbrouw/simple-path-expressions.svg)](https://travis-ci.org/stdbrouw/simple-path-expressions)
+[![Build Status](https://travis-ci.org/debrouwere/simple-path-expressions.svg)](https://travis-ci.org/stdbrouw/simple-path-expressions)
 
 Simple Path Expressions are a dumbed-down but easier-to-use kind of regular expressions for matching and filling paths and urls. For example, `/articles/<year:Y>/<month>/<day>` becomes the regular expression `/^/articles/(\d{4})/([^/]+)/([^/]+)$/`.
 
